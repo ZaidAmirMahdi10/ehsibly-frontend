@@ -1,0 +1,47 @@
+.invoice-table-container {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+  
+    .search-bar {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 5px;  
+      margin-bottom: 20px;
+  
+      label {
+        margin-right: 10px;
+      }
+  
+      input, select, button {
+        margin-right: 10px;
+      }
+    }
+  
+    .error-message {
+      color: red;
+      margin-bottom: 10px;
+    }
+    
+    .add-row-action-buttons {
+        margin-top: 10px;
+    }
+
+    .action-buttons {
+      margin-top: 20px;
+  
+      button {
+        margin-right: 10px;
+      }
+    }
+
+    .edit-row-action-buttons {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 5px;
+    }
+  }
+  
+  
