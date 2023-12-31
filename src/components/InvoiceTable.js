@@ -338,3 +338,4 @@ const InvoiceTable = () => {
 };
 
 export default InvoiceTable;
+
