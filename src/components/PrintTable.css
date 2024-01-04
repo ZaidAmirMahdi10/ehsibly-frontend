@@ -1,0 +1,22 @@
+.print-container {
+  border-bottom: 2px solid gray;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.print-container .invoice-block {
+  background-color: #f0f0f0;
+  display: flex;
+  flex-direction: column;
+}
+
+.print-container .invoice-block .print-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+}
+
+.print-container .invoice-block .print-row {
+  border-bottom: 1px solid #ccc; /* Border between rows */
+}

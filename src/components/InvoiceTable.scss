@@ -1,47 +1,129 @@
+/* Banner styles */
+.invoice-banner {
+  background-color: gray; /* Set the background color */
+  color: #fff; /* Set the text color */
+  padding: 15px;
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+
 .invoice-table-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  overflow-x: hidden;
+
+  .search-bar {
     display: flex;
-    flex-direction: column;
-    padding: 20px;
-  
-    .search-bar {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 5px;  
-      margin-bottom: 20px;
-  
-      label {
-        margin-right: 10px;
-      }
-  
-      input, select, button {
-        margin-right: 10px;
-      }
-    }
-  
-    .error-message {
-      color: red;
-      margin-bottom: 10px;
-    }
-    
-    .add-row-action-buttons {
-        margin-top: 10px;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;  
+    margin-bottom: 20px;
+
+    label {
+      margin-right: 10px;
     }
 
-    .action-buttons {
-      margin-top: 20px;
-  
-      button {
-        margin-right: 10px;
-      }
-    }
-
-    .edit-row-action-buttons {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        gap: 5px;
+    input, select, button {
+      margin-right: 10px;
     }
   }
+
+  .error-message {
+    color: red;
+    margin-bottom: 10px;
+  }
   
+  .add-row-action-buttons {
+      margin-top: 10px;
+      display: flex;
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .top-action-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    padding: 10px 10px 10px 0;
+  }
+
+  .sub-top-action-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .action-buttons {
+    margin-top: 20px;
+
+    button {
+      margin-right: 10px;
+    }
+  }
+
+  .edit-row-action-buttons {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 5px;
+  }
+
+  .cell-title {
+    min-width: 110px;
+  }
+
+  .bold-text {
+    font-weight: 600;
+  }
+
+  .break-word {
+    word-break: break-all;
+  }
+
+  .extra-padding-buttom {
+    padding-bottom: 20px;
+  }
+
+  .loader {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 150px; /* Adjust height based on your design */
+    font-size: 1.5rem;
+    color: #333; /* Set the text color */
+    background-color: #f5f5f5; /* Set the background color */
+    border: 1px solid #ccc; /* Set border properties */
+    border-radius: 5px; /* Set border-radius for rounded corners */
+    position: relative;
+  }
   
+  .loader-text {
+    margin-bottom: 10px; /* Adjust margin for spacing between text and spinner */
+    margin-top: 120px;
+  }
+  
+  .loader::after {
+    content: '';
+    border: 4px solid #f3f3f3; /* Light gray border */
+    border-top: 4px solid #3f51b5; /* Blue border for the spinner */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    animation: spin 1s linear infinite; /* Rotation animation */
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }       
+
+  .hidden {
+    display: none;
+  }  
+}
