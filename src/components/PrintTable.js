@@ -1,3 +1,4 @@
+// im-app/src/components/PrintTable.js
 import React from 'react';
 import './PrintTable.css';
 

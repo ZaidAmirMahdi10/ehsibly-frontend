@@ -1,4 +1,6 @@
+// im-app/src/components/InoviceTable.js
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {
   Button,
@@ -26,8 +28,9 @@ import DateFnsUtils from '@date-io/date-fns';
 import './InvoiceTable.scss';
 import PrintTable from './PrintTable'; 
 
-
 const InvoiceTable = () => {
+  const navigate = useNavigate();
+
   const [data, setData] = useState([]);
   const [newRow, setNewRow] = useState({
     invoiceNumber: '',
@@ -37,7 +40,7 @@ const InvoiceTable = () => {
     amountDinar: '',
     amountOtherCurrency: '',
     otherCurrency: '',
-    originalCost: '',
+    bankName: '',
     received: '',
     left: '',
     swift: '',
@@ -57,24 +60,78 @@ const InvoiceTable = () => {
     fetchData();
   }, [showInputFields]); // Fetch data when the component mounts
 
+
+    // const fetchData = async () => {
+  //   try {
+  //     //  This is for local testing
+  //     const response = await axios.get('http://localhost:3001/invoices');
+
+  //     //  This is for Netlify
+  //     // const response = await axios.get('https://im-app-backend.netlify.app/.netlify/functions/getInvoices');
+
+  //     //  This is for local Netlify (use the comand: "netlify dev" in the backend terminal)
+  //     // const response = await axios.get('http://localhost:8888/.netlify/functions/getInvoices');
+
+  //     setData(response.data);
+  //     setLoading(false);
+  //   } catch (error) {
+  //     setLoading(false);
+  //     console.error('Error fetching data:', error);
+  //   }
+  // };
+
   const fetchData = async () => {
     try {
+      const token = localStorage.getItem('token'); 
+      // Ensure userId is stored as a number
+      const userId = parseInt(localStorage.getItem('userId'), 10);
+  
+      
+      
       //  This is for local testing
-      // const response = await axios.get('http://localhost:3001/invoices');
+      // const response = await axios.get('http://localhost:3001/invoices', {
+      //   headers: {
+      //     Authorization: `Bearer ${token}`,
+      //     'User-Id': userId,
+      //   },
+      // });
 
       //  This is for Netlify
-      const response = await axios.get('https://im-app-backend.netlify.app/.netlify/functions/getInvoices');
+      const response = await axios.get('https://im-app-backend.netlify.app/.netlify/functions/getInvoice', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'User-Id': userId,
+        },
+      });
 
       //  This is for local Netlify (use the comand: "netlify dev" in the backend terminal)
-      // const response = await axios.get('http://localhost:8888/.netlify/functions/getInvoices');
+      // const response = await axios.get('http://localhost:8888/.netlify/functions/getInvoices', {
+      //   headers: {
+      //     Authorization: `Bearer ${token}`,
+      //     'User-Id': userId,
+      //   },
+      // });
+
 
       setData(response.data);
       setLoading(false);
+      console.log('Data received from server:', response.data);
     } catch (error) {
       setLoading(false);
       console.error('Error fetching data:', error);
     }
   };
+  
+  
+  
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('username');
+    navigate('/');
+  };
+
 
   const handleSelectAll = () => {
     setSelectAll(!selectAll);
@@ -95,14 +152,16 @@ const InvoiceTable = () => {
   
       // Calculate "left" only when "received" changes
       if (name === "received") {
-        const amountDinar = parseFloat(updatedRow.amountDinar) || 0;
-        const received = parseFloat(value) || 0;
-        updatedRow.left = (amountDinar - received).toFixed(2); // Assuming you want 2 decimal places
+        const amountDinar = parseFloat(updatedRow.amountDinar.replace(/[^\d.]/g, '').replace(/(\d)(?=(\d{3})+\.)/g, '$1,')) || 0;
+        const received = parseFloat(value.replace(/[^\d.]/g, '').replace(/(\d)(?=(\d{3})+\.)/g, '$1,')) || 0;
+        updatedRow.left = amountDinar - received; 
       }
   
       return updatedRow;
     });
   };
+  
+  
   
 
   const handleDateChange = (date) => {
@@ -126,10 +185,12 @@ const InvoiceTable = () => {
 
     try {
       //  This is for local testing
-      // await axios.post('http://localhost:3001/invoices', { ...newRow, });
+      const userId = localStorage.getItem('userId');
+      await axios.post('http://localhost:3001/invoices', { ...newRow, userId });
+
       
       //  This is for Netlify ..
-      await axios.post('https://im-app-backend.netlify.app/.netlify/functions/postInvoice', { ...newRow });
+      // await axios.post('https://im-app-backend.netlify.app/.netlify/functions/postInvoice', { ...newRow });
 
       //  This is for local Netlify (use the comand: "netlify dev" in the backend terminal)
       // await axios.post('http://localhost:8888/.netlify/functions/postInvoice', { ...newRow });
@@ -143,7 +204,7 @@ const InvoiceTable = () => {
         amountDinar: '',
         amountOtherCurrency: '',
         otherCurrency: '',
-        originalCost: '',
+        bankName: '',
         received: '',
         left: '',
         swift: '',
@@ -172,7 +233,7 @@ const InvoiceTable = () => {
       amountDinar: '',
       amountOtherCurrency: '',
       otherCurrency: '',
-      originalCost: '',
+      bankName: '',
       received: '',
       left: '',
       swift: '',
@@ -202,6 +263,8 @@ const InvoiceTable = () => {
   };
 
   const handleEdit = (index) => {
+    const userId = localStorage.getItem('userId');
+    const invoiceId = data[index].id;
     setShowAddRowButton(false);
     setEditableIndex(index);
     setNewRow(data[index]);
@@ -211,11 +274,11 @@ const InvoiceTable = () => {
   const handleConfirmEdit = async () => {
     try {
       //  This is for local testing
-      // const updatedInvoice = await axios.put(`http://localhost:3001/invoices/${data[editableIndex].id}`, {...newRow,});
+      const updatedInvoice = await axios.put(`http://localhost:3001/invoices/${data[editableIndex].id}`, {...newRow,});
       
       console.log('Sending update request with data:', { ...newRow });
       //  This is for Netlify
-      const updatedInvoice = await axios.put(`https://im-app-backend.netlify.app/.netlify/functions/updateInvoice/${data[editableIndex].id}`, { ...newRow });
+      // const updatedInvoice = await axios.put(`https://im-app-backend.netlify.app/.netlify/functions/updateInvoice/${data[editableIndex].id}`, { ...newRow });
 
       //  This is for local Netlify
       // const updatedInvoice = await axios.put(`http://localhost:8888/.netlify/functions/updateInvoice/${data[editableIndex].id}`, { ...newRow });
@@ -248,7 +311,8 @@ const InvoiceTable = () => {
   
 
   const handleRemove = async (index) => {
-    const invoiceId = data[index].id; // assuming you have an 'id' property in your data
+    const userId = localStorage.getItem('userId');
+    const invoiceId = data[index].id;
 
     // Display a confirmation dialog
     const confirmDelete = window.confirm("Are you sure you want to delete this invoice?");
@@ -256,11 +320,11 @@ const InvoiceTable = () => {
     if (confirmDelete) {
       try {
         // Send a DELETE request to your backend API
-        // This is for Netlify
-        await axios.delete(`https://im-app-backend.netlify.app/.netlify/functions/deleteInvoice/${invoiceId}`);
-
         // This is for local testing
-        // await axios.delete(`http://localhost:3001/invoices/${invoiceId}`);
+        await axios.delete(`http://localhost:3001/invoices/${invoiceId}`);
+        
+        // This is for Netlify
+        // await axios.delete(`https://im-app-backend.netlify.app/.netlify/functions/deleteInvoice/${invoiceId}`);
 
         // This is for local Netlify (use the comand: "netlify dev" in the backend terminal)
         // await axios.delete(`http://localhost:8888/.netlify/functions/deleteInvoice/${invoiceId}`);
@@ -329,7 +393,13 @@ const InvoiceTable = () => {
   
   return (
     <div className="invoice-table-container">
-      <div className='invoice-banner'>Invoice Management Application</div>
+      <div className='invoice-banner'>Ehsibly</div>
+      <div className='user-logout'>
+        <div className='user'>
+          {`USER: ${localStorage.getItem('username')}`} {/* Display the username or any other user info */}
+        </div>
+        <button className='logout-button' onClick={handleLogout}>Logout</button> 
+      </div>
       <div className="search-bar">
         <label>Search: </label>
         <Input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
@@ -346,7 +416,7 @@ const InvoiceTable = () => {
           <MenuItem className="bold-text " value="amountDinar">Amount Dinar</MenuItem>
           <MenuItem className="bold-text " value="amountOtherCurrency">Currency Rate</MenuItem>
           <MenuItem className="bold-text " value="otherCurrency">Currency</MenuItem>
-          <MenuItem className="bold-text " value="originalCost">Original Cost</MenuItem>
+          <MenuItem className="bold-text " value="bankName">Bank Name</MenuItem>
           <MenuItem className="bold-text " value="received">Received</MenuItem>
           <MenuItem className="bold-text " value="left">Left</MenuItem>
           <MenuItem className="bold-text " value="swift">SWIFT</MenuItem>
@@ -418,7 +488,7 @@ const InvoiceTable = () => {
                     <TableCell className="bold-text  cell-title">Amount Dinar</TableCell>
                     <TableCell className="bold-text cell-title">Currency Rate</TableCell>
                     <TableCell className="bold-text cell-title">Currency</TableCell>
-                    <TableCell className="bold-text  cell-title">Original Cost</TableCell>
+                    <TableCell className="bold-text  cell-title">Bank Name</TableCell>
                     <TableCell className="bold-text cell-title">Received</TableCell>
                     <TableCell className="bold-text cell-title">Left</TableCell>
                     <TableCell className="bold-text cell-title">SWIFT</TableCell>
@@ -469,7 +539,7 @@ const InvoiceTable = () => {
                       </TableCell>
 
                       <TableCell>
-                        <Input type="text" name="originalCost" value={newRow.originalCost} onChange={handleInputChange} />
+                        <Input type="text" name="bankName" value={newRow.bankName} onChange={handleInputChange} />
                       </TableCell>
                       <TableCell>
                         <Input type="text" name="received" value={newRow.received} onChange={handleInputChange} />
@@ -566,7 +636,7 @@ const InvoiceTable = () => {
                       )}
                     </TableCell>
 
-                    <TableCell>{editableIndex === index ? <Input type="text" name="originalCost" value={newRow.originalCost} onChange={handleInputChange} /> : row.originalCost}</TableCell>
+                    <TableCell>{editableIndex === index ? <Input type="text" name="bankName" value={newRow.bankName} onChange={handleInputChange} /> : row.bankName}</TableCell>
                     <TableCell>{editableIndex === index ? <Input type="text" name="received" value={newRow.received} onChange={handleInputChange} /> : row.received}</TableCell>
                     <TableCell>{editableIndex === index ? <Input type="text" name="left" value={newRow.left} onChange={handleInputChange} /> : row.left}</TableCell>
                     

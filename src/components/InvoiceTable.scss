@@ -10,6 +10,23 @@
   border-radius: 10px;
 }
 
+.user-logout {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logout-button {
+  
+}
+
+.user {
+  padding: 10px 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
 .invoice-table-container {
   display: flex;
   flex-direction: column;
