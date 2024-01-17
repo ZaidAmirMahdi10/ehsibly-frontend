@@ -60,33 +60,11 @@ const InvoiceTable = () => {
     fetchData();
   }, [showInputFields]); // Fetch data when the component mounts
 
-
-    // const fetchData = async () => {
-  //   try {
-  //     //  This is for local testing
-  //     const response = await axios.get('http://localhost:3001/invoice');
-
-  //     //  This is for Netlify
-  //     // const response = await axios.get('https://im-app-backend.netlify.app/.netlify/functions/getInvoices');
-
-  //     //  This is for local Netlify (use the comand: "netlify dev" in the backend terminal)
-  //     // const response = await axios.get('http://localhost:8888/.netlify/functions/getInvoices');
-
-  //     setData(response.data);
-  //     setLoading(false);
-  //   } catch (error) {
-  //     setLoading(false);
-  //     console.error('Error fetching data:', error);
-  //   }
-  // };
-
   const fetchData = async () => {
     try {
       const token = localStorage.getItem('token'); 
       // Ensure userId is stored as a number
       const userId = parseInt(localStorage.getItem('userId'), 10);
-  
-      
       
       //  This is for local testing
       // const response = await axios.get('http://localhost:3001/invoice', {
@@ -184,13 +162,14 @@ const InvoiceTable = () => {
     }
 
     try {
-      //  This is for local testing
       const userId = localStorage.getItem('userId');
-      await axios.post('http://localhost:3001/invoice', { ...newRow, userId });
+
+      //  This is for local testing
+      // await axios.post('http://localhost:3001/invoice', { ...newRow, userId });
 
       
       //  This is for Netlify ..
-      // await axios.post('https://im-app-backend.netlify.app/.netlify/functions/postInvoice', { ...newRow });
+      await axios.post('https://im-app-backend.netlify.app/.netlify/functions/postInvoice', { ...newRow });
 
       //  This is for local Netlify (use the comand: "netlify dev" in the backend terminal)
       // await axios.post('http://localhost:8888/.netlify/functions/postInvoice', { ...newRow });
@@ -274,11 +253,11 @@ const InvoiceTable = () => {
   const handleConfirmEdit = async () => {
     try {
       //  This is for local testing
-      const updatedInvoice = await axios.put(`http://localhost:3001/invoice/${data[editableIndex].id}`, {...newRow,});
+      // const updatedInvoice = await axios.put(`http://localhost:3001/invoices/${data[editableIndex].id}`, {...newRow,});
       
       console.log('Sending update request with data:', { ...newRow });
       //  This is for Netlify
-      // const updatedInvoice = await axios.put(`https://im-app-backend.netlify.app/.netlify/functions/updateInvoice/${data[editableIndex].id}`, { ...newRow });
+      const updatedInvoice = await axios.put(`https://im-app-backend.netlify.app/.netlify/functions/updateInvoice/${data[editableIndex].id}`, { ...newRow });
 
       //  This is for local Netlify
       // const updatedInvoice = await axios.put(`http://localhost:8888/.netlify/functions/updateInvoice/${data[editableIndex].id}`, { ...newRow });
@@ -321,10 +300,10 @@ const InvoiceTable = () => {
       try {
         // Send a DELETE request to your backend API
         // This is for local testing
-        await axios.delete(`http://localhost:3001/invoice/${invoiceId}`);
+        // await axios.delete(`http://localhost:3001/invoices/${invoiceId}`);
         
         // This is for Netlify
-        // await axios.delete(`https://im-app-backend.netlify.app/.netlify/functions/deleteInvoice/${invoiceId}`);
+        await axios.delete(`https://im-app-backend.netlify.app/.netlify/functions/deleteInvoice/${invoiceId}`);
 
         // This is for local Netlify (use the comand: "netlify dev" in the backend terminal)
         // await axios.delete(`http://localhost:8888/.netlify/functions/deleteInvoice/${invoiceId}`);
