@@ -175,7 +175,7 @@ const InvoiceTable = () => {
       //  This is for local testing
       // await axios.post('http://localhost:3001/invoice', { ...newRow, userId });
 
-      console.log('userId:', userId);
+      console.log('userId: ', userId);
       // This is for Netlify
       await axios.post('https://im-app-backend.netlify.app/.netlify/functions/postInvoice', { ...newRow }, {
         headers: {
@@ -184,7 +184,6 @@ const InvoiceTable = () => {
         },
       });
 
-      
       //  This is for local Netlify (use the comand: "netlify dev" in the backend terminal)
       // await axios.post('http://localhost:8888/.netlify/functions/postInvoice', { ...newRow });
       
