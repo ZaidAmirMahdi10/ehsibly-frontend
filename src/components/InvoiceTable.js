@@ -280,7 +280,8 @@ const InvoiceTable = () => {
         newData[editableIndex] = updatedInvoice.data;
         return newData;
       });
-  
+      
+      console.log('Above setNewRow((prevRow)');
       setNewRow((prevRow) => {
         const { received } = newRow;
         const amountDinar = parseFloat(newRow.amountDinar) || 0;
@@ -290,7 +291,7 @@ const InvoiceTable = () => {
 
         return { ...updatedInvoice.data, received, left: leftValue };
       });
-  
+      
       setShowAddRowButton(true);
       setShowInputFields(false);
       setEditableIndex(null);
@@ -302,7 +303,6 @@ const InvoiceTable = () => {
   
 
   const handleRemove = async (index) => {
-    const userId = localStorage.getItem('userId');
     const invoiceId = data[index].id;
 
     // Display a confirmation dialog
