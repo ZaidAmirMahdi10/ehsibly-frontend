@@ -64,7 +64,7 @@ const InvoiceTable = () => {
     // const fetchData = async () => {
   //   try {
   //     //  This is for local testing
-  //     const response = await axios.get('http://localhost:3001/invoices');
+  //     const response = await axios.get('http://localhost:3001/invoice');
 
   //     //  This is for Netlify
   //     // const response = await axios.get('https://im-app-backend.netlify.app/.netlify/functions/getInvoices');
@@ -89,7 +89,7 @@ const InvoiceTable = () => {
       
       
       //  This is for local testing
-      // const response = await axios.get('http://localhost:3001/invoices', {
+      // const response = await axios.get('http://localhost:3001/invoice', {
       //   headers: {
       //     Authorization: `Bearer ${token}`,
       //     'User-Id': userId,
@@ -186,7 +186,7 @@ const InvoiceTable = () => {
     try {
       //  This is for local testing
       const userId = localStorage.getItem('userId');
-      await axios.post('http://localhost:3001/invoices', { ...newRow, userId });
+      await axios.post('http://localhost:3001/invoice', { ...newRow, userId });
 
       
       //  This is for Netlify ..
@@ -274,7 +274,7 @@ const InvoiceTable = () => {
   const handleConfirmEdit = async () => {
     try {
       //  This is for local testing
-      const updatedInvoice = await axios.put(`http://localhost:3001/invoices/${data[editableIndex].id}`, {...newRow,});
+      const updatedInvoice = await axios.put(`http://localhost:3001/invoice/${data[editableIndex].id}`, {...newRow,});
       
       console.log('Sending update request with data:', { ...newRow });
       //  This is for Netlify
@@ -321,7 +321,7 @@ const InvoiceTable = () => {
       try {
         // Send a DELETE request to your backend API
         // This is for local testing
-        await axios.delete(`http://localhost:3001/invoices/${invoiceId}`);
+        await axios.delete(`http://localhost:3001/invoice/${invoiceId}`);
         
         // This is for Netlify
         // await axios.delete(`https://im-app-backend.netlify.app/.netlify/functions/deleteInvoice/${invoiceId}`);
