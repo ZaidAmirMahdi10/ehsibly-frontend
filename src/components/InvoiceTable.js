@@ -150,6 +150,8 @@ const InvoiceTable = () => {
     return !data.some((row) => row.invoiceNumber === invoiceNumber);
   };
 
+
+
   const handleAddRow = async () => {
     if (!newRow.invoiceNumber.trim()) {
       setError('Invoice number cannot be empty.');
@@ -162,17 +164,30 @@ const InvoiceTable = () => {
     }
 
     try {
-      const userId = localStorage.getItem('userId');
+      const token = localStorage.getItem('token');
+      const userId = parseInt(localStorage.getItem('userId'), 10);
+
+      if (!userId) {
+        console.error('User ID not found in localStorage');
+        return;
+      }
 
       //  This is for local testing
       // await axios.post('http://localhost:3001/invoice', { ...newRow, userId });
 
-      
-      //  This is for Netlify ..
-      await axios.post('https://im-app-backend.netlify.app/.netlify/functions/postInvoice', { ...newRow });
+      console.log('userId:', userId);
+      // This is for Netlify
+      await axios.post('https://im-app-backend.netlify.app/.netlify/functions/postInvoice', { ...newRow }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'User-Id': userId,
+        },
+      });
 
+      
       //  This is for local Netlify (use the comand: "netlify dev" in the backend terminal)
       // await axios.post('http://localhost:8888/.netlify/functions/postInvoice', { ...newRow });
+      
 
       fetchData();
       setNewRow({
@@ -197,6 +212,7 @@ const InvoiceTable = () => {
       setError('Error adding new invoice.');
     }
   };
+
 
   const handleShowInputFields = () => {
     setShowInputFields(true);
