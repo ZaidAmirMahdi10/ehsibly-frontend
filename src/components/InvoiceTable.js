@@ -286,6 +286,7 @@ const InvoiceTable = () => {
         const amountDinar = parseFloat(newRow.amountDinar) || 0;
         const receivedValue = parseFloat(received) || 0;
         const leftValue = (amountDinar - receivedValue).toString();
+        console.log('Type of leftValue:', typeof leftValue);
 
         return { ...updatedInvoice.data, received, left: leftValue };
       });
