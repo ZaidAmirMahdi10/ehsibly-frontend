@@ -288,8 +288,6 @@ const InvoiceTable = () => {
         const leftValue = (amountDinar - receivedValue).toString();
 
         return { ...updatedInvoice.data, received, left: leftValue };
-
-        return { ...updatedInvoice.data, received, left: leftValue };
       });
   
       setShowAddRowButton(true);
