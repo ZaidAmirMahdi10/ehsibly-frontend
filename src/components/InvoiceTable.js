@@ -93,7 +93,6 @@ const InvoiceTable = () => {
 
       setData(response.data);
       setLoading(false);
-      console.log('Data received from server:', response.data);
     } catch (error) {
       setLoading(false);
       console.error('Error fetching data:', error);
@@ -175,7 +174,7 @@ const InvoiceTable = () => {
       //  This is for local testing
       // await axios.post('http://localhost:3001/invoice', { ...newRow, userId });
 
-      console.log('userId: ', userId);
+      
       // This is for Netlify
       await axios.post('https://im-app-backend.netlify.app/.netlify/functions/postInvoice', { ...newRow }, {
         headers: {
@@ -270,14 +269,11 @@ const InvoiceTable = () => {
       //  This is for local testing
       // const updatedInvoice = await axios.put(`http://localhost:3001/invoices/${data[editableIndex].id}`, {...newRow,});
       
-      console.log('Sending update request with data:', { ...newRow });
       //  This is for Netlify
       const updatedInvoice = await axios.put(`https://im-app-backend.netlify.app/.netlify/functions/updateInvoice/${data[editableIndex].id}`, { ...newRow });
 
       //  This is for local Netlify
       // const updatedInvoice = await axios.put(`http://localhost:8888/.netlify/functions/updateInvoice/${data[editableIndex].id}`, { ...newRow });
-
-      console.log('Data: ', updatedInvoice);
 
       setData((prevData) => {
         const newData = [...prevData];
@@ -289,8 +285,10 @@ const InvoiceTable = () => {
         const { received } = newRow;
         const amountDinar = parseFloat(newRow.amountDinar) || 0;
         const receivedValue = parseFloat(received) || 0;
-        const leftValue = (amountDinar - receivedValue).toFixed(2);
-        
+        const leftValue = (amountDinar - receivedValue).toString();
+
+        return { ...updatedInvoice.data, received, left: leftValue };
+
         return { ...updatedInvoice.data, received, left: leftValue };
       });
   
