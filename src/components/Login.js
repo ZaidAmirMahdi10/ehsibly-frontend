@@ -7,7 +7,11 @@ const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
-  
+
+    const handleGoToGegister = async () => {
+      navigate('/register');
+    };
+
     const handleLogin = async () => {
       try {
         //  This is for local testing
@@ -38,19 +42,41 @@ const Login = () => {
     };
       
     return (
-      <div>
-        <h2>Login</h2>
-        <form>
-          <label>Username:</label>
-          <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
-  
-          <label>Password:</label>
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-  
-          <button type="button" onClick={handleLogin}>
-            Login
-          </button>
-        </form>
+      <div className='onboarding'>
+        <div className='main-wrapper'>
+            <div>
+                <h2 className='logo-text'>EHSIBLY</h2>
+                <p className='intro-text'>
+                    EHSIBLY, the cutting-edge application designed for efficient accounting and seamless invoice management, is revolutionizing the way organizations handle their financial processes. Tailored to meet the evolving needs of businesses, EHSIBLY offers a comprehensive suite of tools and features that empower users to navigate the complexities of financial management with ease.
+                </p>
+            </div>
+            <form className='rigister-login-form' id='login-form'>
+                <h2>Login</h2>
+                <div className='entry'>
+                    <div className='entry-item'>
+                        <label className='entry-item-label'>Username:</label>
+                        <input className='landing-input-feild' type="username" value={username} onChange={(e) => setUsername(e.target.value)} />
+                    </div>
+                </div>
+
+                <div className='entry'>
+                    <div className='entry-item'>
+                        <label className='entry-item-label'>Password:</label>
+                        <input className='landing-input-feild' type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    </div>
+                </div>
+
+                <button type="button" onClick={handleLogin}>
+                  Login
+                </button>
+                
+                <p className='login-or-register'>Or</p>
+
+                <button type="button" onClick={handleGoToGegister}>
+                  Register an account
+                </button>
+            </form>
+        </div>
       </div>
     );
   };

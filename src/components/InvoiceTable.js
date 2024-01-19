@@ -106,7 +106,7 @@ const InvoiceTable = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
     localStorage.removeItem('username');
-    navigate('/');
+    navigate('/login');
   };
 
 
@@ -286,7 +286,7 @@ const InvoiceTable = () => {
         const { received } = newRow;
         const amountDinar = parseFloat(newRow.amountDinar) || 0;
         const receivedValue = parseFloat(received) || 0;
-        const leftValue = (amountDinar - receivedValue).toString();
+        const leftValue = (amountDinar - receivedValue).toFixed(2).toString();
         console.log('Type of leftValue:', typeof leftValue);
 
         return { ...updatedInvoice.data, received, left: leftValue };
@@ -389,7 +389,7 @@ const InvoiceTable = () => {
         <div className='user'>
           {`USER: ${localStorage.getItem('username')}`} {/* Display the username or any other user info */}
         </div>
-        <button className='logout-button' onClick={handleLogout}>Logout</button> 
+        <button className='c-button' onClick={handleLogout}>Logout</button> 
       </div>
       <div className="search-bar">
         <label>Search: </label>
@@ -414,7 +414,7 @@ const InvoiceTable = () => {
           <MenuItem className="bold-text " value="date">Date</MenuItem>
           <MenuItem className="bold-text " value="notes">Notes</MenuItem>
         </Select>
-        <Button type="button" variant="contained" color="primary" onClick={handleSearch}>
+        <Button type="button" variant="contained" style={{backgroundColor: 'purple', color: 'white'}}onClick={handleSearch}>
           Search
         </Button>
       </div>
@@ -432,7 +432,7 @@ const InvoiceTable = () => {
                     </Button>
                   </div>
                 ) : (
-                  <Button type="button" variant="contained" color="primary" onClick={handleShowInputFields}>
+                  <Button className='c-button' type="button" variant="contained" style={{backgroundColor: 'purple', color: 'white'}}onClick={handleShowInputFields}>
                       Add new row
                   </Button>
                 )
@@ -442,7 +442,7 @@ const InvoiceTable = () => {
               <></>
           )
         }  
-        <Button variant="contained" style={{backgroundColor: 'gray', color: 'white'}} onClick={handlePrint}>
+        <Button className='c-button' variant="contained" onClick={handlePrint}>
           Print
         </Button>
       </div>
@@ -675,13 +675,13 @@ const InvoiceTable = () => {
                     <TableCell className='edit-row-action-buttons'>
                       {editableIndex === index ? (
                         <>
-                          <Button variant="contained" color="secondary" onClick={cancelEdit}>Cancel</Button>
-                          <Button variant="contained" color="primary" onClick={handleConfirmEdit}>Confirm</Button>
+                          <Button className='c-button' variant="contained" color="secondary" onClick={cancelEdit}>Cancel</Button>
+                          <Button className='c-button' variant="contained" style={{backgroundColor: 'purple', color: 'white'}}onClick={handleConfirmEdit}>Confirm</Button>
                         </>
                       ) : (
                         <>
-                          <Button variant="contained" style={{backgroundColor: 'gray', color: 'white'}} onClick={() => handleEdit(index)}>Edit</Button>
-                          <Button variant="contained" style={{backgroundColor: 'red', color: 'white'}} onClick={() => handleRemove(index)}>Remove</Button>
+                          <Button className='c-button' variant="contained" style={{backgroundColor: 'lightgray', color: 'white'}} onClick={() => handleEdit(index)}>Edit</Button>
+                          <Button className='c-button' variant="contained" style={{backgroundColor: 'red', color: 'white'}} onClick={() => handleRemove(index)}>Remove</Button>
                         </>
                       )}
                     </TableCell>
@@ -697,20 +697,20 @@ const InvoiceTable = () => {
             <div className='add-row-action-buttons'>
               {showInputFields ? (
                   <div className="action-buttons">
-                    <Button variant="contained" color="secondary" onClick={cancelEdit}>
+                    <Button className='c-button' variant="contained" color="secondary" onClick={cancelEdit}>
                       Cancel
                     </Button>
-                    <Button variant="contained" style={{backgroundColor: 'green', color: 'white'}} onClick={handleAddRow}>
+                    <Button className='c-button' variant="contained" style={{backgroundColor: 'green', color: 'white'}} onClick={handleAddRow}>
                       Confirm
                     </Button>
                   </div>
                 ) : (
-                  <Button type="button" variant="contained" color="primary" onClick={handleShowInputFields}>
+                  <Button className='c-button' type="button" variant="contained" style={{backgroundColor: 'purple', color: 'white'}}onClick={handleShowInputFields}>
                       Add new row
                   </Button>
                 )
               }
-              <Button variant="contained" style={{backgroundColor: 'gray', color: 'white'}} onClick={handlePrint}>
+              <Button className='c-button' variant="contained" style={{backgroundColor: 'lightgray', color: 'white'}} onClick={handlePrint}>
                 Print
               </Button>
             </div>
