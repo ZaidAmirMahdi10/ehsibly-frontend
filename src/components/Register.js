@@ -43,7 +43,7 @@ const Register = () => {
 
   return (
     <div className='onboarding'>
-        <div className='main-wrapper'>
+        <div className='main-wrapper register-form'>
             <div>
                 <h2 className='logo-text'>EHSIBLY</h2>
                 <p className='intro-text'>

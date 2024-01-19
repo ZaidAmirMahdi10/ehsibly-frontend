@@ -376,3 +376,26 @@ input {
 
 
 
+@media only screen and (max-width: 995px) {
+  .main-wrapper {
+    width: 300px;
+    flex-direction: column;
+
+    &.register-form {
+      height: 600px;
+    }
+  }
+
+  .intro-text {
+    display: none;
+  }
+
+  .rigister-login-form {
+    width: unset;
+    overflow-y: unset;
+  }
+
+  .text {
+    font-size: 24px;
+  }
+}
