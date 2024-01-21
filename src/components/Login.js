@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
@@ -16,13 +16,13 @@ const Login = () => {
       try {
         //  This is for local testing
         // const response = await axios.post('http://localhost:3001/login', {
-        //   username,
+        //   email,
         //   password,
         // });
         
         //  This is for Netlify
         const response = await axios.post('https://im-app-backend.netlify.app/.netlify/functions/login', {
-            username,
+            email,
             password,
         });
 
@@ -30,10 +30,10 @@ const Login = () => {
 
         const { token, user } = response.data;
   
-        // Store the token, user ID, and username in localStorage
+        // Store the token, user ID, and email in localStorage
         localStorage.setItem('token', token);
         localStorage.setItem('userId', user.id);
-        localStorage.setItem('username', user.username);
+        localStorage.setItem('email', user.email);
   
         navigate('/dashboard');
       } catch (error) {
@@ -54,8 +54,8 @@ const Login = () => {
                 <h2>Login</h2>
                 <div className='entry'>
                     <div className='entry-item'>
-                        <label className='entry-item-label'>Username:</label>
-                        <input className='landing-input-feild' type="username" value={username} onChange={(e) => setUsername(e.target.value)} />
+                        <label className='entry-item-label'>Email:</label>
+                        <input className='landing-input-feild' type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                     </div>
                 </div>
 
