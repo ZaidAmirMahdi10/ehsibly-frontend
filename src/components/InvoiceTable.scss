@@ -1,4 +1,15 @@
 /* Banner styles */
+.o-row {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+.o-column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .invoice-banner {
   background-color: gray; /* Set the background color */
   color: #fff; /* Set the text color */
@@ -244,6 +255,7 @@ input {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 20px;
 }
 
 .user {

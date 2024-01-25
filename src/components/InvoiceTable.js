@@ -387,9 +387,12 @@ const InvoiceTable = () => {
       <div className='invoice-banner'>Ehsibly</div>
       <div className='user-logout'>
         <div className='user'>
-          {`USER: ${localStorage.getItem('username')}`} {/* Display the username or any other user info */}
+          {`USER: ${localStorage.getItem('username')}`} 
         </div>
-        <button className='c-button' onClick={handleLogout}>Logout</button> 
+        <div className='o-row'>
+          <button className='c-button'>View Chart</button> 
+          <button className='c-button' onClick={handleLogout}>Logout</button> 
+        </div>
       </div>
       <div className="search-bar">
         <label>Search: </label>

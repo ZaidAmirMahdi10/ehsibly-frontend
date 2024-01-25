@@ -25,16 +25,17 @@ const Login = () => {
             email,
             password,
         });
-
-
-
+        
+        console.log('Response data:', response.data);
         const { token, user } = response.data;
-  
-        // Store the token, user ID, and email in localStorage
+    
+        // Store the token, user ID, email, and username in localStorage
         localStorage.setItem('token', token);
         localStorage.setItem('userId', user.id);
         localStorage.setItem('email', user.email);
-  
+        localStorage.setItem('username', user.username);
+    
+        console.log('User:', user);
         navigate('/dashboard');
       } catch (error) {
         console.error('Login error:', error);
