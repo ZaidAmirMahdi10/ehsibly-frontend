@@ -292,10 +292,11 @@ input {
   }
   
   .add-row-action-buttons {
-      margin-top: 10px;
-      display: flex;
+    margin-top: 10px;
+    display: flex;
     flex-direction: row;
     gap: 10px;
+    align-items: baseline;
   }
 
   .top-action-buttons {
@@ -303,6 +304,7 @@ input {
     flex-direction: row;
     gap: 10px;
     padding: 10px 10px 10px 0;
+    align-items: center;
   }
 
   .sub-top-action-buttons {

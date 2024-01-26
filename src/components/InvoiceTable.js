@@ -24,9 +24,9 @@ import ReactDOMServer from 'react-dom/server';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 
-
 import './InvoiceTable.scss';
 import PrintTable from './PrintTable'; 
+import ChartModal from './ChartModal';
 
 const InvoiceTable = () => {
   const navigate = useNavigate();
@@ -55,6 +55,7 @@ const InvoiceTable = () => {
   const [editableIndex, setEditableIndex] = useState(null);
   const [loading, setLoading] = useState(true);
   const [selectAll, setSelectAll] = useState(false);
+  const [chartModalOpen, setChartModalOpen] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -100,7 +101,13 @@ const InvoiceTable = () => {
   };
   
   
-  
+  const handleShowChart = () => {
+    setChartModalOpen(true);
+  };
+
+  const handleCloseChart = () => {
+    setChartModalOpen(false);
+  };
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -390,7 +397,7 @@ const InvoiceTable = () => {
           {`USER: ${localStorage.getItem('username')}`} 
         </div>
         <div className='o-row'>
-          <button className='c-button'>View Chart</button> 
+          <button className='c-button' onClick={handleShowChart}>View Chart</button> 
           <button className='c-button' onClick={handleLogout}>Logout</button> 
         </div>
       </div>
@@ -713,7 +720,7 @@ const InvoiceTable = () => {
                   </Button>
                 )
               }
-              <Button className='c-button' variant="contained" style={{backgroundColor: 'lightgray', color: 'white'}} onClick={handlePrint}>
+              <Button className='c-button' variant="contained" style={{backgroundColor: 'lightgray'}} onClick={handlePrint}>
                 Print
               </Button>
             </div>
@@ -722,6 +729,8 @@ const InvoiceTable = () => {
           )}
         </>
       )}
+      {/* Render the ChartModal component */}
+      <ChartModal open={chartModalOpen} onClose={handleCloseChart} data={data} />
     </div>
   );
 };
