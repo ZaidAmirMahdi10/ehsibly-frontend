@@ -50,13 +50,13 @@ const Register = () => {
                     EHSIBLY, the cutting-edge application designed for efficient accounting and seamless invoice management, is revolutionizing the way organizations handle their financial processes. Tailored to meet the evolving needs of businesses, EHSIBLY offers a comprehensive suite of tools and features that empower users to navigate the complexities of financial management with ease.
                 </p>
             </div>
-            {!username ? 
+            {/* {!username ? 
                 <div className='rigister-login-form'>
                     <p className='text contact-us-title-text'>Please contact us at the below contact information and we will help you to create an acount.</p>
                     <p className='text'><strong>Email:</strong><i type='email'> info.lykvyd@gmail.com</i></p>
                     <p className='text'><strong>Phone:</strong><i type='phone'> 009647800092734</i></p>
                 </div>
-            :
+            : */}
                 <form className='rigister-login-form'>
                     <button className='back-button' type="button" onClick={handleGoBack}>BACK</button>
                     <h2>Register</h2>
@@ -92,7 +92,7 @@ const Register = () => {
                         Register
                     </button>
                 </form>
-            }
+            {/* } */}
         </div>
     </div>
   );

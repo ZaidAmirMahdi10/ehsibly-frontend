@@ -37,9 +37,8 @@ const InvoiceTable = () => {
     companyName: '',
     customerName: '',
     containerNumber: '', 
-    amountDinar: '',
-    amountOtherCurrency: '',
-    otherCurrency: '',
+    amount: '',
+    amountCurrency: '',
     bankName: '',
     received: '',
     left: '',
@@ -136,9 +135,9 @@ const InvoiceTable = () => {
   
       // Calculate "left" only when "received" changes
       if (name === "received") {
-        const amountDinar = parseFloat(updatedRow.amountDinar.replace(/[^\d.]/g, '').replace(/(\d)(?=(\d{3})+\.)/g, '$1,')) || 0;
+        const amount = parseFloat(updatedRow.amount.replace(/[^\d.]/g, '').replace(/(\d)(?=(\d{3})+\.)/g, '$1,')) || 0;
         const received = parseFloat(value.replace(/[^\d.]/g, '').replace(/(\d)(?=(\d{3})+\.)/g, '$1,')) || 0;
-        updatedRow.left = amountDinar - received; 
+        updatedRow.left = amount - received; 
       }
   
       return updatedRow;
@@ -200,9 +199,8 @@ const InvoiceTable = () => {
         companyName: '',
         customerName: '', 
         containerNumber: '',
-        amountDinar: '',
-        amountOtherCurrency: '',
-        otherCurrency: '',
+        amount: '',
+        amountCurrency: '',
         bankName: '',
         received: '',
         left: '',
@@ -230,9 +228,8 @@ const InvoiceTable = () => {
       invoiceNumber: '',
       companyName: '',
       customerName: '', 
-      amountDinar: '',
-      amountOtherCurrency: '',
-      otherCurrency: '',
+      amount: '',
+      amountCurrency: '',
       bankName: '',
       received: '',
       left: '',
@@ -291,9 +288,9 @@ const InvoiceTable = () => {
       console.log('Above setNewRow((prevRow)');
       setNewRow((prevRow) => {
         const { received } = newRow;
-        const amountDinar = parseFloat(newRow.amountDinar) || 0;
+        const amount = parseFloat(newRow.amount) || 0;
         const receivedValue = parseFloat(received) || 0;
-        const leftValue = (amountDinar - receivedValue).toFixed(2).toString();
+        const leftValue = (amount - receivedValue).toFixed(2).toString();
         console.log('Type of leftValue:', typeof leftValue);
 
         return { ...updatedInvoice.data, received, left: leftValue };
@@ -414,9 +411,8 @@ const InvoiceTable = () => {
           <MenuItem className="bold-text " value="customerName">Customer Name</MenuItem>
           <MenuItem className="bold-text " value="companyName">Company</MenuItem>
           <MenuItem className="bold-text " value="containerNumber">Container Number</MenuItem>
-          <MenuItem className="bold-text " value="amountDinar">Amount Dinar</MenuItem>
-          <MenuItem className="bold-text " value="amountOtherCurrency">Currency Rate</MenuItem>
-          <MenuItem className="bold-text " value="otherCurrency">Currency</MenuItem>
+          <MenuItem className="bold-text " value="amount">Amount</MenuItem>
+          <MenuItem className="bold-text " value="amountCurrency">Currency</MenuItem>
           <MenuItem className="bold-text " value="bankName">Bank Name</MenuItem>
           <MenuItem className="bold-text " value="received">Received</MenuItem>
           <MenuItem className="bold-text " value="left">Left</MenuItem>
@@ -486,8 +482,7 @@ const InvoiceTable = () => {
                     <TableCell className="bold-text  cell-title">Customer Name</TableCell>
                     <TableCell className="bold-text  cell-title">Company</TableCell>
                     <TableCell className="bold-text  cell-title">Container No.</TableCell>
-                    <TableCell className="bold-text  cell-title">Amount Dinar</TableCell>
-                    <TableCell className="bold-text cell-title">Currency Rate</TableCell>
+                    <TableCell className="bold-text  cell-title">Amount</TableCell>
                     <TableCell className="bold-text cell-title">Currency</TableCell>
                     <TableCell className="bold-text  cell-title">Bank Name</TableCell>
                     <TableCell className="bold-text cell-title">Received</TableCell>
@@ -518,17 +513,13 @@ const InvoiceTable = () => {
                         <Input type="text" name="containerNumber" value={newRow.containerNumber} onChange={handleInputChange} />
                       </TableCell>
                       <TableCell>
-                        <Input type="text" name="amountDinar" value={newRow.amountDinar} onChange={handleInputChange} />
+                        <Input type="text" name="amount" value={newRow.amount} onChange={handleInputChange} />
                       </TableCell>
-                      <TableCell>
-                        <Input type="text" name="amountOtherCurrency" value={newRow.amountOtherCurrency} onChange={handleInputChange} />
-                      </TableCell>
-
                       <TableCell>
                         <FormControl>
                           <MaterialSelect
-                            name="otherCurrency"
-                            value={newRow.otherCurrency}
+                            name="amountCurrency"
+                            value={newRow.amountCurrency}
                             onChange={handleInputChange}
                           >
                             <MenuItem value="US">US</MenuItem>
@@ -613,17 +604,15 @@ const InvoiceTable = () => {
                     <TableCell>{editableIndex === index ? <Input type="text" name="customerName" value={newRow.customerName} onChange={handleInputChange} /> : row.customerName}</TableCell>
                     <TableCell>{editableIndex === index ? <Input type="text" name="companyName" value={newRow.companyName} onChange={handleInputChange} /> : row.companyName}</TableCell>
                     <TableCell>{editableIndex === index ? <Input type="text" name="containerNumber" value={newRow.containerNumber} onChange={handleInputChange} /> : row.containerNumber}</TableCell>
-                    <TableCell>{editableIndex === index ? <Input type="text" name="amountDinar" value={newRow.amountDinar} onChange={handleInputChange} /> : row.amountDinar}</TableCell>
-                    <TableCell>{editableIndex === index ? <Input type="text" name="amountOtherCurrency" value={newRow.amountOtherCurrency} onChange={handleInputChange} /> : row.amountOtherCurrency}</TableCell>
-                    
+                    <TableCell>{editableIndex === index ? <Input type="text" name="amount" value={newRow.amount} onChange={handleInputChange} /> : row.amount}</TableCell>
                     <TableCell>
                       {editableIndex === index ? (
                         <FormControl>
                           <MaterialSelect
                             labelId={`currency-label-${index}`}
                             id={`currency-select-${index}`}
-                            name="otherCurrency"
-                            value={newRow.otherCurrency}
+                            name="amountCurrency"
+                            value={newRow.amountCurrency}
                             onChange={handleInputChange}
                           >
                             <MenuItem value="US">US</MenuItem>
@@ -633,7 +622,7 @@ const InvoiceTable = () => {
                           </MaterialSelect>
                         </FormControl>
                       ) : (
-                        row.otherCurrency
+                        row.amountCurrency
                       )}
                     </TableCell>
 

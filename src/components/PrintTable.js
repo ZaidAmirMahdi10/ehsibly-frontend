@@ -77,13 +77,8 @@ const PrintTable = ({ data }) => {
         <div className="print-row">
             <FlexRow>
                 <FlexColumn>
-                    <FontWeight600>Amount In Dinar:</FontWeight600>
-                    <span>{row.amountDinar}</span>
-                </FlexColumn>
-
-                <FlexColumn>
-                    <FontWeight600>Currency Rate:</FontWeight600>
-                    <span>{row.amountOtherCurrency} {row.otherCurrency}</span>
+                    <FontWeight600>Amount:</FontWeight600>
+                    <span>{row.amount}</span>
                 </FlexColumn>
             </FlexRow>            
         </div>
